@@ -4,14 +4,15 @@ import { resolve } from "path";
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: "public",
   build: {
     outDir: "dist",
     rollupOptions: {
       input: {
-        popup: resolve(__dirname, "popup.html"),
-        viewer: resolve(__dirname, "viewer.html"),
+        popup: resolve(__dirname, "src/Popup/index.tsx"),
+        viewer: resolve(__dirname, "src/Viewer/index.tsx"),
         background: resolve(__dirname, "src/background.ts"),
-        content: resolve(__dirname, "src/content.ts"), // 필요 시
+        content: resolve(__dirname, "src/content.ts"),
       },
       output: {
         entryFileNames: "[name].js",
