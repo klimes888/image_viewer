@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Super Image Viewer",
+  "version": "1.0.0",
+  "description": "View local images in fullscreen from browser popup.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "public/icon128.png"
+    }
+  },
+  "permissions": ["storage", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.js", "*.css", "*.html", "*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
