@@ -1,7 +1,7 @@
 // src/popup/Popup.tsx
 import React from "react";
 
-const Viewer: React.FC = () => {
+const Viewer = () => {
   return <div></div>;
 };
 

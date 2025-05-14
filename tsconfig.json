@@ -2,13 +2,15 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": ["react", "react-dom", "chrome"]
   },
-  "include": ["src"]
+  "include": ["src", "src/types/*.d.ts"]
 }

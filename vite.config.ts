@@ -1,9 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { resolve } from "path";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), vanillaExtractPlugin(), cssInjectedByJsPlugin()],
   publicDir: "public",
   build: {
     outDir: "dist",
