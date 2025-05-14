@@ -1,6 +1,11 @@
 import "../styles/global.css.ts";
-import React from "react";
+
 import ReactDOM from "react-dom/client";
 import Viewer from "./Viewer";
+import { ImageProvider } from "../context/image.context.js";
 
-ReactDOM.createRoot(document.getElementById("viewer-root")!).render(<Viewer />);
+ReactDOM.createRoot(document.getElementById("viewer-root")!).render(
+  <ImageProvider>
+    <Viewer />
+  </ImageProvider>
+);
