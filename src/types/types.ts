@@ -1,5 +1,5 @@
 export interface ImageFile {
-  name: string;
-  path: string;
-  url: string;
+  id?: number;
+  file: File;
+  selected: boolean;
 }

@@ -1,4 +1,4 @@
-import "../styles/global.css.ts";
+import "../styles/global.css";
 
 import ReactDOM from "react-dom/client";
 import Viewer from "./Viewer";

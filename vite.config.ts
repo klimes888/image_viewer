@@ -5,7 +5,14 @@ import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 
 export default defineConfig({
-  plugins: [react(), vanillaExtractPlugin(), cssInjectedByJsPlugin()],
+  plugins: [
+    react(),
+    vanillaExtractPlugin(),
+    cssInjectedByJsPlugin({
+      topExecutionPriority: true,
+      styleId: "vanilla-extract-css",
+    }),
+  ],
   publicDir: "public",
   build: {
     outDir: "dist",
@@ -18,6 +25,7 @@ export default defineConfig({
       },
       output: {
         entryFileNames: "[name].js",
+        assetFileNames: "assets/[name].[ext]",
       },
     },
   },

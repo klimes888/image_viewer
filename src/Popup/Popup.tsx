@@ -2,11 +2,12 @@
 import React from "react";
 
 // styles
-import * as ds from "./popup.css";
+import * as ps from "./popup.css";
 
 // constants
 const TITLE = "이미지 뷰어";
-const VIEWER = "뷰어 시작하기";
+const VIEWER = "로컬 이미지 뷰어";
+const CRAWLER = "크롤러 뷰어";
 
 const Popup = () => {
   const openViewer = () => {
@@ -15,19 +16,19 @@ const Popup = () => {
   };
 
   return (
-    <div className={ds.container}>
-      <h1 className={ds.title}>{TITLE}</h1>
-      {/* <input
-        type="file"
-        webkitdirectory
-        multiple
-        accept="image/*"
-        aria-label="이미지 파일 선택"
-      /> */}
-      <button className={ds.button} onClick={openViewer}>
-        {VIEWER}
-      </button>
-    </div>
+    <body className={ps.container}>
+      <h1 className={ps.title}>{TITLE}</h1>
+      <div className={ps.button_wrap}>
+        <button className={ps.button} onClick={openViewer}>
+          {VIEWER}
+        </button>
+      </div>
+      <div className={ps.button_wrap}>
+        <button className={ps.button} onClick={() => {}}>
+          {CRAWLER}
+        </button>
+      </div>
+    </body>
   );
 };
 

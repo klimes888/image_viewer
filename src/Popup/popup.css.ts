@@ -1,27 +1,28 @@
 import { style } from "@vanilla-extract/css";
 
-export const layout = style({
-  display: "flex",
-  backgroundColor: "red",
-});
-
 export const title = style({
   fontSize: "1em",
   fontWeight: 600,
 });
 
 export const container = style({
+  display: "flex",
   padding: "1em",
-  backgroundColor: "#f0f0f0",
-  width: "100%",
+  width: "12em",
+});
+
+export const button_wrap = style({
+  display: "flex",
+  columnGap: "0.25em",
+  marginBottom: "0.5em",
 });
 
 export const button = style({
-  color: "white",
-  padding: "10px 15px",
+  padding: "0.5em 1em",
   border: "none",
-  borderRadius: "4px",
+  borderRadius: "0.25em",
   cursor: "pointer",
+  whiteSpace: "nowrap",
   ":hover": {
     backgroundColor: "#45a049",
   },
