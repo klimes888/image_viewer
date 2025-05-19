@@ -5,8 +5,16 @@ import { style, styleVariants } from "@vanilla-extract/css";
  */
 export const viewer_layout = style({
   display: "flex",
+  width: "100%",
+  overflow: "scrollY",
+});
+
+export const viewer_inner = style({
+  display: "flex",
   flexDirection: "column",
   width: "100%",
+  height: "100%",
+  padding: "1em",
 });
 
 export const viewer_button = style({
@@ -29,6 +37,8 @@ export const image_input = style({
 
 export const nav_inner = style({
   display: "flex",
+  rowGap: "0.25em",
+  padding: "0.25em",
   width: "100%",
   height: "100%",
 });
@@ -51,4 +61,23 @@ export const button_variant = styleVariants({
     backgroundColor: "#e0e0e0",
     color: "#333",
   },
+});
+
+/** Image Viewer */
+export const image_layout = style({
+  display: "flex",
+  gap: "0.35em 0.5em",
+  width: "100%",
+});
+
+export const image_wrap = style({
+  display: "flex",
+  width: "8em",
+  height: "8em",
+  borderRadius: "0.25em",
+  overflow: "hidden",
+});
+
+export const image_selected = style({
+  border: "0.2em solid #379ae6",
 });

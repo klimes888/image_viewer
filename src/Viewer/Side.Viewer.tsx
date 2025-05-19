@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 import * as vs from "./viewer.css";
 
@@ -7,9 +7,19 @@ import { useImageContent } from "../context/image.context";
 import { IMAGE_CONTEXT } from "../types";
 
 const SideViewer = () => {
-  const { ADD_IMAGES } = IMAGE_CONTEXT;
+  const { ADD_IMAGES, UNSELECT_IMAGE, REMOVE_IMAGE } = IMAGE_CONTEXT;
+
+  const [rightButton, setRightButton] = useState<
+    | {
+        id: number;
+        title: string[];
+        active: boolean;
+      }[]
+    | null
+  >(null);
+
   // context
-  const { imageDispatch } = useImageContent();
+  const { imageDispatch, imageState } = useImageContent();
   // ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [targetBtn, setTargetBtn] = useState("test");
@@ -40,9 +50,59 @@ const SideViewer = () => {
     }
   };
 
+  const isSelected = imageState.find(({ selected }) => selected);
+  const handleSelectControll = (id: number) => {
+    if (!rightButton) return;
+    if (id === 0 && isSelected) {
+      // 전체 선택 해제
+      imageDispatch({ type: UNSELECT_IMAGE });
+    }
+
+    if (id === 0 && !isSelected) {
+      // 전체 선택
+      imageDispatch({ type: UNSELECT_IMAGE });
+    }
+  };
+
+  const selectImageRemove = () => {
+    imageDispatch({ type: REMOVE_IMAGE });
+  };
+
+  const rightBtn = useMemo(
+    () => [
+      {
+        id: 0,
+        title: ["전체 선택", "전체 선택 해제"],
+        active: false,
+      },
+      {
+        id: 1,
+        title: ["전체보기"],
+        active: false,
+      },
+      {
+        id: 2,
+        title: ["슬라이드쇼"],
+        active: false,
+      },
+    ],
+    []
+  );
+
+  useEffect(() => {
+    setRightButton(rightBtn);
+  }, [rightBtn]);
+
+  useEffect(() => {
+    if (!rightButton) return;
+    const test = rightButton?.map((data) =>
+      data.id === 0 ? { ...data, active: !!isSelected } : data
+    );
+    setRightButton(test);
+  }, [rightButton, isSelected]);
+
   const buttons = [
     { title: "이미지 업로드", trigger: handleButtonClick },
-    { title: "전체보기", trigger: () => {} },
     { title: "자동 넘기기 시작", trigger: () => {} },
   ];
 
@@ -70,6 +130,25 @@ const SideViewer = () => {
             {title}
           </button>
         ))}
+        {rightButton &&
+          rightButton.map(({ id, title, active }) => {
+            return (
+              <button
+                key={id}
+                onClick={() => handleSelectControll(id)}
+                className={`${vs.base_button} ${
+                  vs.button_variant[id === 0 && !active ? "inactive" : "active"]
+                }`}
+              >
+                {title[id === 0 && active ? 1 : 0]}
+              </button>
+            );
+          })}
+        {isSelected && (
+          <button onClick={selectImageRemove} className={vs.base_button}>
+            선택 이미지 삭제
+          </button>
+        )}
       </div>
     </nav>
   );
