@@ -3,10 +3,8 @@ import {
   createContext,
   useReducer,
   ReactNode,
-  Dispatch,
   useContext,
   useState,
-  SetStateAction,
 } from "react";
 import { ImageFile, IMAGE_MODE } from "../types";
 import {
@@ -48,10 +46,7 @@ const reducer = (state: ImageFile[], action: Action): ImageFile[] => {
   }
 };
 
-const ImageContext = createContext<ProviderType>({
-  imageState: initialState,
-  imageDispatch: () => null,
-});
+const ImageContext = createContext<ProviderType | null>(null);
 
 export const useImageContent = () => {
   const context = useContext(ImageContext);
@@ -65,6 +60,9 @@ export const ImageProvider = ({ children }: { children: ReactNode }) => {
   const [imageState, imageDispatch] = useReducer(reducer, initialState);
   const [imageMode, setImageMode] = useState(IMAGE_MODE.PREVIEW);
   const [slideshowOpen, setSlideshowOpen] = useState(false);
+  // const [viewMode, setViewMode] = useState();
+  const [curPage, setCurPage] = useState(0);
+  const [slideshowTime, setSlideshowTime] = useState(10);
 
   return (
     <ImageContext.Provider
@@ -75,6 +73,10 @@ export const ImageProvider = ({ children }: { children: ReactNode }) => {
         setImageMode,
         slideshowOpen,
         setSlideshowOpen,
+        curPage,
+        setCurPage,
+        slideshowTime,
+        setSlideshowTime,
       }}
     >
       {children}

@@ -13,7 +13,9 @@ export enum IMAGE_CONTEXT {
 }
 
 export enum IMAGE_MODE {
-  PREVIEW,
-  SLIDESHOW,
-  VIEWER,
+  PREVIEW, // 기본모드
+  ALL_SLIDESHOW, // 모든 이미지 슬라이드 쇼
+  SELECTED_SLIDESHOW, // 슬라이드 쇼
+  ALL_VIEWER, // 모든 이미지 전체 화면
+  SELECTED_VIEWER, // 전체 화면
 }

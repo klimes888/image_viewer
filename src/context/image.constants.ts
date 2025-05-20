@@ -14,10 +14,14 @@ export type Action = { type: IMAGE_CONTEXT; payload?: ImageFile[] | string };
 export type ProviderType = {
   imageState: ImageFile[];
   imageDispatch: Dispatch<Action>;
-  imageMode?: IMAGE_MODE;
-  setImageMode?: Dispatch<SetStateAction<IMAGE_MODE>>;
-  slideshowOpen?: boolean;
-  setSlideshowOpen?: Dispatch<SetStateAction<boolean>>;
+  imageMode: IMAGE_MODE;
+  setImageMode: Dispatch<SetStateAction<IMAGE_MODE>>;
+  slideshowOpen: boolean;
+  setSlideshowOpen: Dispatch<SetStateAction<boolean>>;
+  curPage: number;
+  setCurPage: Dispatch<SetStateAction<number>>;
+  slideshowTime: number;
+  setSlideshowTime: Dispatch<SetStateAction<number>>;
 };
 
 export const initialState: ImageFile[] = [];
