@@ -11,6 +11,7 @@ export enum IMAGE_CONTEXT {
   SELECT_IMAGE,
   UNSELECT_IMAGE,
   ALL_SELECT_IMAGE,
+  SET_LOADING,
 }
 
 export enum IMAGE_MODE {

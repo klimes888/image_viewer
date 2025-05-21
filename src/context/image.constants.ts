@@ -8,12 +8,21 @@ export const {
   SELECT_IMAGE,
   UNSELECT_IMAGE,
   ALL_SELECT_IMAGE,
+  SET_LOADING,
 } = IMAGE_CONTEXT;
 
-export type Action = { type: IMAGE_CONTEXT; payload?: ImageFile[] | string };
+export type State = {
+  images: ImageFile[];
+  isLoading?: boolean;
+};
+
+export type Action = {
+  type: IMAGE_CONTEXT;
+  payload?: ImageFile[] | string | boolean;
+};
 
 export type ProviderType = {
-  imageState: ImageFile[];
+  imageState: State;
   imageDispatch: Dispatch<Action>;
   imageMode: IMAGE_MODE;
   setImageMode: Dispatch<SetStateAction<IMAGE_MODE>>;
@@ -27,4 +36,4 @@ export type ProviderType = {
   setSplitWindow: Dispatch<SetStateAction<number>>;
 };
 
-export const initialState: ImageFile[] = [];
+export const initialState: State = { images: [], isLoading: false };

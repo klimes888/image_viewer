@@ -37,10 +37,10 @@ const ImageViewer = () => {
 
   useEffect(() => {
     if ([SELECTED_VIEWER, SELECTED_SLIDESHOW].includes(imageMode)) {
-      const result = imageState.filter((data) => data.selected);
+      const result = imageState.images.filter((data) => data.selected);
       setImageList(result);
     } else {
-      setImageList(imageState);
+      setImageList(imageState.images);
     }
   }, [imageMode, imageState]);
 

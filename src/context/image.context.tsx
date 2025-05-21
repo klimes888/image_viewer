@@ -6,7 +6,7 @@ import {
   useContext,
   useState,
 } from "react";
-import { ImageFile, IMAGE_MODE } from "../types";
+import { IMAGE_MODE } from "../types";
 import {
   Action,
   ProviderType,
@@ -17,33 +17,57 @@ import {
   SELECT_IMAGE,
   UNSELECT_IMAGE,
   ALL_SELECT_IMAGE,
+  SET_LOADING,
+  State,
 } from "./image.constants";
 
-const reducer = (state: ImageFile[], action: Action): ImageFile[] => {
+const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case ADD_IMAGES:
-      if (typeof action.payload === "string" || !action.payload) return state;
-      return [...state, ...action.payload].map((data, id) => ({
-        ...data,
-        img: URL.createObjectURL(data.file),
-        id,
-      }));
+      if (
+        typeof action.payload === "string" ||
+        typeof action.payload === "boolean" ||
+        !action.payload
+      )
+        return state;
+      return {
+        isLoading: false,
+        images: [...state.images, ...action.payload].map((data, id) => ({
+          ...data,
+          img: URL.createObjectURL(data.file),
+          id,
+        })),
+      };
     case RESET_IMAGES:
-      return [];
+      return { ...state, images: [] };
     case SELECT_IMAGE:
-      return state.map((data) => {
-        if (Number(action.payload) === data.id) {
-          return { ...data, selected: data.selected ? false : true };
-        } else {
-          return data;
-        }
-      });
+      return {
+        ...state,
+        images: state.images.map((data) => {
+          if (Number(action.payload) === data.id) {
+            return { ...data, selected: data.selected ? false : true };
+          } else {
+            return data;
+          }
+        }),
+      };
     case UNSELECT_IMAGE:
-      return state.map((data) => ({ ...data, selected: false }));
+      return {
+        ...state,
+        images: state.images.map((data) => ({ ...data, selected: false })),
+      };
     case ALL_SELECT_IMAGE:
-      return state.map((data) => ({ ...data, selected: true }));
+      return {
+        ...state,
+        images: state.images.map((data) => ({ ...data, selected: true })),
+      };
     case REMOVE_IMAGE:
-      return state.filter((img) => !img.selected);
+      return {
+        ...state,
+        images: state.images.filter((img) => !img.selected),
+      };
+    case SET_LOADING:
+      return { ...state, isLoading: Boolean(action.payload) };
     default:
       return state;
   }

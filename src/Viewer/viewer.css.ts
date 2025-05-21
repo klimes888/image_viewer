@@ -100,6 +100,7 @@ export const popup_layout_inner = style({
 /** Image Viewer */
 export const image_layout = style({
   display: "flex",
+  flexWrap: "wrap",
   gap: "0.35em 0.5em",
   width: "100%",
   padding: "3.5em 0.5em 0.5em 0",
@@ -114,7 +115,7 @@ export const image_wrap = style({
 });
 
 export const image_selected = style({
-  border: "0.2em solid #379ae6",
+  border: "0.25em solidrgb(215, 155, 43)",
 });
 
 /** Image Carousel Viewer */

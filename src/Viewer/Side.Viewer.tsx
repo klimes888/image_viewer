@@ -56,9 +56,8 @@ const SideViewer = () => {
     }
   };
 
-  const isSelected = imageState.find(({ selected }) => selected);
+  const isSelected = imageState.images.find(({ selected }) => selected);
   const handleSelectControll = (id: number) => {
-    console.log("isSelected", isSelected);
     if (!rightButton) return;
     if (id === 0 && isSelected) {
       // 전체 선택 해제
@@ -85,17 +84,18 @@ const SideViewer = () => {
         id: 0,
         title: ["전체 선택", "전체 선택 해제"],
         active:
-          imageState.length > 0 && !imageState.find((data) => !data.selected),
+          imageState.images.length > 0 &&
+          !imageState.images.find((data) => !data.selected),
       },
       {
         id: 1,
         title: ["전체 화면 보기"],
-        active: imageState.length > 0,
+        active: imageState.images.length > 0,
       },
       {
         id: 2,
         title: ["슬라이드쇼"],
-        active: imageState.length > 0,
+        active: imageState.images.length > 0,
       },
     ],
     [imageState]
@@ -111,7 +111,7 @@ const SideViewer = () => {
       if ([0, 2].includes(data.id)) {
         return { ...data, active: !!isSelected };
       } else if (data.id === 1) {
-        return { ...data, active: imageState.length > 0 };
+        return { ...data, active: imageState.images.length > 0 };
       } else {
         return data;
       }

@@ -35,8 +35,13 @@ const Viewer = () => {
 
   return (
     <div className={vs.viewer_layout}>
-      {[SELECTED_SLIDESHOW, ALL_SLIDESHOW].includes(imageMode) ? (
-        <SlideSideViewer />
+      {[
+        SELECTED_SLIDESHOW,
+        ALL_SLIDESHOW,
+        ALL_VIEWER,
+        SELECTED_VIEWER,
+      ].includes(imageMode) ? (
+        <SlideSideViewer type={imageMode} />
       ) : (
         <SideViewer />
       )}
