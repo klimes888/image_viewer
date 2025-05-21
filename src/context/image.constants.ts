@@ -7,6 +7,7 @@ export const {
   REMOVE_IMAGE,
   SELECT_IMAGE,
   UNSELECT_IMAGE,
+  ALL_SELECT_IMAGE,
 } = IMAGE_CONTEXT;
 
 export type Action = { type: IMAGE_CONTEXT; payload?: ImageFile[] | string };

@@ -16,6 +16,7 @@ import {
   REMOVE_IMAGE,
   SELECT_IMAGE,
   UNSELECT_IMAGE,
+  ALL_SELECT_IMAGE,
 } from "./image.constants";
 
 const reducer = (state: ImageFile[], action: Action): ImageFile[] => {
@@ -39,6 +40,8 @@ const reducer = (state: ImageFile[], action: Action): ImageFile[] => {
       });
     case UNSELECT_IMAGE:
       return state.map((data) => ({ ...data, selected: false }));
+    case ALL_SELECT_IMAGE:
+      return state.map((data) => ({ ...data, selected: true }));
     case REMOVE_IMAGE:
       return state.filter((img) => !img.selected);
     default:

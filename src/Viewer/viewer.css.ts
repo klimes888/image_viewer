@@ -44,6 +44,8 @@ export const image_input = style({
 
 export const nav_inner = style({
   display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
   gap: "0.25em",
   padding: "0.25em",
   width: "100%",
@@ -154,4 +156,34 @@ export const arrow_button_variant = styleVariants({
 
 export const image_view_wrap = style({
   width: "100vw",
+});
+
+/** Input style */
+export const input_wrap = style({
+  width: "10em",
+  height: "2em",
+  border: "1px solid #999",
+  borderRadius: "0.25em",
+  overflow: "hidden",
+});
+
+export const input_style = style({
+  width: "100%",
+  height: "100%",
+});
+
+export const button_wrap = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginLeft: "0.25em",
+  gap: "0.2em",
+});
+
+export const input_second_button = style({
+  width: "3em",
+  height: "2em",
+  background: "#7ac2e6",
+  borderRadius: "0.25em",
+  border: "none",
 });

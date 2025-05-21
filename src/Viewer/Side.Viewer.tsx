@@ -6,9 +6,11 @@ import * as vs from "./viewer.css";
 import { useImageContent } from "../context/image.context";
 import { IMAGE_CONTEXT } from "../types";
 import { IMAGE_MODE } from "../types";
+import useModalClickOutsideHook from "../hooks/useModalOff.Hook";
 
 const SideViewer = () => {
-  const { ADD_IMAGES, UNSELECT_IMAGE, REMOVE_IMAGE } = IMAGE_CONTEXT;
+  const { ADD_IMAGES, UNSELECT_IMAGE, REMOVE_IMAGE, ALL_SELECT_IMAGE } =
+    IMAGE_CONTEXT;
   const [slideshowOpen, setSlideshowOpen] = useState<number | null>(null);
   const [rightButton, setRightButton] = useState<
     | {
@@ -19,12 +21,14 @@ const SideViewer = () => {
     | null
   >(null);
 
+  // hooks
+  const ref = useModalClickOutsideHook(() => setSlideshowOpen(null));
+
   // context
   const { imageDispatch, imageState, setImageMode } = useImageContent();
 
   // ref
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [targetBtn, setTargetBtn] = useState("test");
 
   const handleFileChange = async ({ target }: { target: HTMLInputElement }) => {
     if (target.files === null) return;
@@ -60,7 +64,7 @@ const SideViewer = () => {
       imageDispatch({ type: UNSELECT_IMAGE });
     } else if (id === 0 && !isSelected) {
       // 전체 선택
-      imageDispatch({ type: UNSELECT_IMAGE });
+      imageDispatch({ type: ALL_SELECT_IMAGE });
     }
 
     if (id === 1 || id === 2) {
@@ -79,20 +83,21 @@ const SideViewer = () => {
       {
         id: 0,
         title: ["전체 선택", "전체 선택 해제"],
-        active: false,
+        active:
+          imageState.length > 0 && !imageState.find((data) => !data.selected),
       },
       {
         id: 1,
         title: ["전체 화면 보기"],
-        active: true, // 언제나 true
+        active: imageState.length > 0,
       },
       {
         id: 2,
         title: ["슬라이드쇼"],
-        active: false,
+        active: imageState.length > 0,
       },
     ],
-    []
+    [imageState]
   );
 
   useEffect(() => {
@@ -132,7 +137,14 @@ const SideViewer = () => {
   const slideViewPopup = [
     {
       title: "선택한 이미지 슬라이드쇼",
-      trigger: () => [setImageMode(IMAGE_MODE.SELECTED_SLIDESHOW)],
+      trigger: () => {
+        if (isSelected) {
+          // 선택한게 있어야함
+          setImageMode(IMAGE_MODE.SELECTED_SLIDESHOW);
+        } else {
+          alert("이미지를 선택해주세요");
+        }
+      },
     },
     {
       title: "전체 이미지 슬라이드쇼",
@@ -141,9 +153,8 @@ const SideViewer = () => {
   ];
 
   const popupRender = (id: number) => {
-    console.log("id", id);
-    const test = id === 1 ? defaultViewPopup : id === 2 ? slideViewPopup : [];
-    return test.map(({ trigger, title }) => {
+    const result = id === 1 ? defaultViewPopup : id === 2 ? slideViewPopup : [];
+    return result.map(({ trigger, title }) => {
       return (
         <button
           onClick={() => [trigger(), setSlideshowOpen(null)]}
@@ -171,10 +182,8 @@ const SideViewer = () => {
         {buttons.map(({ title, trigger }) => (
           <button
             key={title}
-            onClick={() => [setTargetBtn(title), trigger()]}
-            className={`${vs.base_button} ${
-              vs.button_variant[targetBtn === title ? "active" : "inactive"]
-            }`}
+            onClick={() => trigger()}
+            className={`${vs.base_button} ${vs.button_variant["active"]}`}
           >
             {title}
           </button>
@@ -193,7 +202,7 @@ const SideViewer = () => {
                   {title[id === 0 && active ? 1 : 0]}
                 </button>
                 {id === slideshowOpen && (
-                  <div className={vs.popup_layout}>
+                  <div ref={ref} className={vs.popup_layout}>
                     <div className={vs.popup_layout_inner}>
                       {popupRender(id)}
                     </div>

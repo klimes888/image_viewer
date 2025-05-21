@@ -19,7 +19,10 @@ const SlideSideViewer = () => {
           >
             슬라이드 쇼 중지
           </button>
+        </div>
+        <div className={vs.input_wrap}>
           <input
+            className={vs.input_style}
             aria-label="slide-show-time"
             type="number"
             min="1"
@@ -32,6 +35,30 @@ const SlideSideViewer = () => {
               }
             }}
           />
+        </div>
+        <div className={vs.button_wrap}>
+          <button
+            onClick={() => {
+              setSlideshowTime((prev) => {
+                if (prev === 1) return prev;
+                return prev - 1;
+              });
+            }}
+            className={vs.input_second_button}
+          >
+            1초 -
+          </button>
+          <button
+            onClick={() => {
+              setSlideshowTime((prev) => {
+                if (prev === 60) return prev;
+                return prev + 1;
+              });
+            }}
+            className={vs.input_second_button}
+          >
+            1초 +
+          </button>
         </div>
       </div>
     </nav>
