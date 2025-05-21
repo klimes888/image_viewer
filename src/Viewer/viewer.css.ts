@@ -155,7 +155,9 @@ export const arrow_button_variant = styleVariants({
 });
 
 export const image_view_wrap = style({
+  display: "flex",
   width: "100vw",
+  flexDirection: "row",
 });
 
 /** Input style */

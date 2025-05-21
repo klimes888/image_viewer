@@ -3,6 +3,7 @@ import * as vs from "./viewer.css";
 // context
 import { useImageContent } from "../context/image.context";
 import { IMAGE_MODE } from "../types";
+import SplitViewComponent from "../Component/SplitView.Component";
 
 const SlideSideViewer = () => {
   // context
@@ -60,6 +61,7 @@ const SlideSideViewer = () => {
             1초 +
           </button>
         </div>
+        <SplitViewComponent />
       </div>
     </nav>
   );

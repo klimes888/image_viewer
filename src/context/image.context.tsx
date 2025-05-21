@@ -64,8 +64,15 @@ export const ImageProvider = ({ children }: { children: ReactNode }) => {
   const [imageMode, setImageMode] = useState(IMAGE_MODE.PREVIEW);
   const [slideshowOpen, setSlideshowOpen] = useState(false);
   // const [viewMode, setViewMode] = useState();
+
+  // 페이지 조절
   const [curPage, setCurPage] = useState(0);
+
+  // 시간 조절
   const [slideshowTime, setSlideshowTime] = useState(10);
+
+  // 분할 조절
+  const [splitWindow, setSplitWindow] = useState(0);
 
   return (
     <ImageContext.Provider
@@ -80,6 +87,8 @@ export const ImageProvider = ({ children }: { children: ReactNode }) => {
         setCurPage,
         slideshowTime,
         setSlideshowTime,
+        splitWindow,
+        setSplitWindow,
       }}
     >
       {children}

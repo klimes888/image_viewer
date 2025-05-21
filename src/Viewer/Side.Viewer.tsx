@@ -58,6 +58,7 @@ const SideViewer = () => {
 
   const isSelected = imageState.find(({ selected }) => selected);
   const handleSelectControll = (id: number) => {
+    console.log("isSelected", isSelected);
     if (!rightButton) return;
     if (id === 0 && isSelected) {
       // 전체 선택 해제

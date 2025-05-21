@@ -23,6 +23,8 @@ export type ProviderType = {
   setCurPage: Dispatch<SetStateAction<number>>;
   slideshowTime: number;
   setSlideshowTime: Dispatch<SetStateAction<number>>;
+  splitWindow: number;
+  setSplitWindow: Dispatch<SetStateAction<number>>;
 };
 
 export const initialState: ImageFile[] = [];
