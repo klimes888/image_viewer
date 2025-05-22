@@ -97,7 +97,12 @@ const ImageViewer = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === "Space" || e.key === " ") {
+      if (
+        e.code === "Space" ||
+        e.key === " " ||
+        e.code === "ArrowRight" ||
+        e.key === "ArrowRight"
+      ) {
         e.preventDefault();
 
         if (timerRef.current) {
@@ -105,6 +110,19 @@ const ImageViewer = () => {
         }
 
         pageHandler("right");
+
+        startSlideshowTimer(); // 타이머 재시작
+      }
+
+      if (e.code === "ArrowLeft" || e.key === "ArrowLeft") {
+        // 왼쪽 방향키
+        e.preventDefault();
+
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+
+        pageHandler("left");
 
         startSlideshowTimer(); // 타이머 재시작
       }
