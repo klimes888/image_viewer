@@ -108,14 +108,14 @@ export const image_layout = style({
 
 export const image_wrap = style({
   display: "flex",
-  width: "8em",
-  height: "8em",
+  width: "14em",
+  height: "14em",
   borderRadius: "0.25em",
   overflow: "hidden",
 });
 
 export const image_selected = style({
-  border: "0.25em solidrgb(215, 155, 43)",
+  border: "0.25em solid rgb(215, 155, 43)",
 });
 
 /** Image Carousel Viewer */

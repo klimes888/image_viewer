@@ -1,6 +1,6 @@
 // src/popup/Popup.tsx
 
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import * as vs from "./viewer.css";
 import { IMAGE_MODE, ImageFile } from "../types";
 import { useImageContent } from "../context/image.context";
@@ -18,22 +18,42 @@ const ImageViewer = () => {
   const [imageList, setImageList] = useState<ImageFile[]>([]);
   const { SELECTED_VIEWER, SELECTED_SLIDESHOW, ALL_VIEWER } = IMAGE_MODE;
 
-  const pageHandler = (type: "left" | "right") => {
+  const timerRef = useRef<number | null>(null);
+
+  const startSlideshowTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
+    if ([SELECTED_VIEWER, ALL_VIEWER].includes(imageMode)) return;
+    if (imageList.length === 0) return;
+
     const step = [1, 2].includes(splitWindow) ? 2 : 1;
-    const totalPages = imageList.length;
 
-    if (type === "left") {
-      setCurPage((prev) =>
-        prev - step < 0
-          ? (totalPages - step + (totalPages % step)) % totalPages
-          : prev - step
-      );
-    }
+    timerRef.current = window.setInterval(() => {
+      setCurPage((prev) => (prev + step) % imageList.length);
+    }, slideshowTime * 1000);
+  }, [imageMode, slideshowTime, imageList.length, splitWindow]);
 
-    if (type === "right") {
-      setCurPage((prev) => (prev + step) % totalPages);
-    }
-  };
+  const pageHandler = useCallback(
+    (type: "left" | "right") => {
+      const step = [1, 2].includes(splitWindow) ? 2 : 1;
+      const totalPages = imageList.length;
+
+      if (type === "left") {
+        setCurPage((prev) =>
+          prev - step < 0
+            ? (totalPages - step + (totalPages % step)) % totalPages
+            : prev - step
+        );
+      }
+
+      if (type === "right") {
+        setCurPage((prev) => (prev + step) % totalPages);
+      }
+    },
+    [imageList.length]
+  );
 
   useEffect(() => {
     if ([SELECTED_VIEWER, SELECTED_SLIDESHOW].includes(imageMode)) {
@@ -66,17 +86,35 @@ const ImageViewer = () => {
 
   // slide 타이머
   useEffect(() => {
-    if (imageList.length === 0) return;
-    if ([SELECTED_VIEWER, ALL_VIEWER].includes(imageMode)) return;
+    startSlideshowTimer();
 
-    const step = [1, 2].includes(splitWindow) ? 2 : 1;
-
-    const timer = setInterval(() => {
-      setCurPage((prev) => (prev + step) % imageList.length);
-    }, slideshowTime * 1000);
-
-    return () => clearInterval(timer);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, [imageMode, slideshowTime, imageList.length, splitWindow]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space" || e.key === " ") {
+        e.preventDefault();
+
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+
+        pageHandler("right");
+
+        startSlideshowTimer(); // 타이머 재시작
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [pageHandler, startSlideshowTimer]);
 
   return (
     <section className={vs.image_carousel_layout}>

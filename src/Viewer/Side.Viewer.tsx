@@ -9,8 +9,13 @@ import { IMAGE_MODE } from "../types";
 import useModalClickOutsideHook from "../hooks/useModalOff.Hook";
 
 const SideViewer = () => {
-  const { ADD_IMAGES, UNSELECT_IMAGE, REMOVE_IMAGE, ALL_SELECT_IMAGE } =
-    IMAGE_CONTEXT;
+  const {
+    ADD_IMAGES,
+    SET_LOADING,
+    UNSELECT_IMAGE,
+    REMOVE_IMAGE,
+    ALL_SELECT_IMAGE,
+  } = IMAGE_CONTEXT;
   const [slideshowOpen, setSlideshowOpen] = useState<number | null>(null);
   const [rightButton, setRightButton] = useState<
     | {
@@ -41,7 +46,10 @@ const SideViewer = () => {
         file,
       });
     }
-
+    imageDispatch({
+      type: SET_LOADING,
+      payload: true,
+    });
     imageDispatch({ type: ADD_IMAGES, payload: result });
   };
 
